@@ -1,0 +1,36 @@
+﻿@using Assignment3_Dahyun_Ko.Entities;
+@model List<Customer>
+
+@{
+    ViewData["Title"] = "All Customers";
+}
+
+<div class="container">
+    <h1 class="display-4">@ViewData["Title"]</h1>
+    <a asp-controller="Customer" asp-action="Add">Add a new customer</a>
+    <table class="table table-bordered table-striped">
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Address</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var customer in Model)
+            {
+                <tr>
+                    <td>@customer.Name</td>
+                    <td>@customer.Address1 @customer.Address2</td>
+                    <td>
+                        <a asp-controller="Customer" asp-action="Manage" asp-route-id="@customer.CustomerId">Invoices</a>
+                        |
+                        <a asp-controller="Customer" asp-action="Edit" asp-route-id="@customer.CustomerId">Eidt</a>
+                        |
+                        <a asp-controller="Customer" asp-action="Delete" asp-route-id="@customer.CustomerId">Delete</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>

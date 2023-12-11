@@ -1,0 +1,59 @@
+﻿@using Assignment3_Dahyun_Ko.Entities;
+@model Customer
+
+@{
+    ViewData["Title"] = "Edit the customer";
+}
+
+<div class="container">
+    <h2>@ViewData["Title"]</h2>
+
+    <form asp-controller="Customer" asp-action="Edit" method="post">
+        <div asp-validation-summary="All" class="text-danger"></div>
+
+        <div class="form-group">
+            <label asp-for="@Model.Name">Name</label>
+            <input asp-for="@Model.Name" type="text" class="form-control" />
+        </div>
+        <div class="form-group">
+            <label asp-for="@Model.Address1">Date</label>
+            <input asp-for="@Model.Address1" type="text" class="form-control" />
+        </div>
+        <div class="form-group">
+            <label asp-for="@Model.Address2">Address2</label>
+            <input asp-for="@Model.Address2" type="text" class="form-control" />
+        </div>
+        <div class="form-group">
+            <label asp-for="@Model.City">City</label>
+            <input asp-for="@Model.City" type="text" class="form-control" />
+        </div>
+        <div class="form-group">
+            <label asp-for="@Model.ProvinceOrState">Province/State</label>
+            <input asp-for="@Model.ProvinceOrState" type="text" class="form-control" />
+        </div>
+        <div class="form-group">
+            <label asp-for="@Model.ZipOrPostalCode">Zip/Postal Code</label>
+            <input asp-for="@Model.ZipOrPostalCode" type="text" class="form-control" />
+        </div>
+        <div class="form-group">
+            <label asp-for="@Model.Phone">Phone</label>
+            <input asp-for="@Model.Phone" type="text" class="form-control" />
+        </div>
+        <div class="form-group">
+            <label asp-for="@Model.ContactFirstName">Contact First Name</label>
+            <input asp-for="@Model.ContactFirstName" type="text" class="form-control" />
+        </div>
+        <div class="form-group">
+            <label asp-for="@Model.ContactLastName">Contact Last Name</label>
+            <input asp-for="@Model.ContactLastName" type="text" class="form-control" />
+        </div>
+        <div class="form-group">
+            <label asp-for="@Model.ContactEmail">Contact Email</label>
+            <input asp-for="@Model.ContactEmail" type="text" class="form-control" />
+        </div>
+        <input type="hidden" asp-for="@Model.CustomerId" />
+        <button type="submit" class="btn btn-primary mt-3">@ViewBag.Action</button>
+        <a asp-controller="Customer" asp-action="Customers" class="btn btn-primary mt-3">Cancel</a>
+    </form>
+
+</div>
