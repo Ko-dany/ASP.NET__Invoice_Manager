@@ -1,5 +1,4 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using System.IO;
 
 namespace Assignment3_Dahyun_Ko.Entities
 {

@@ -29,6 +29,6 @@
         public int CustomerId { get; set; }
 
         /* A property to navigate from an Invoice to all its Line Items */
-        public ICollection<InvoiceLineItem>? InvoiceLineItems { get;  }
+        public ICollection<InvoiceLineItem>? InvoiceLineItems { get; }
     }
 }
