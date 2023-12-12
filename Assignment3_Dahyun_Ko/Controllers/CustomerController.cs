@@ -17,10 +17,15 @@ namespace Assignment3_Dahyun_Ko.Controllers
         }
 
         /*********** List of Customers ***********/
-        public IActionResult Customers(string lowerBound = "A", string upperBound = "E")
+        public IActionResult Customers(string lowerBound="A", string upperBound="E")
         {
             var customers = customerService.GetCustomersFromTo(lowerBound, upperBound);
-            return View(customers);
+            CustomerActiveViewModel customerActiveViewModel = new CustomerActiveViewModel()
+            {
+                Customers = customers,
+                Active = $"{lowerBound}-{upperBound}"
+            };
+            return View(customerActiveViewModel);
         }
 
         /*********** Add ***********/

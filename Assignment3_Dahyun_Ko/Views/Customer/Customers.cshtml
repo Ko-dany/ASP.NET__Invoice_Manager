@@ -1,5 +1,4 @@
-﻿@using Customers.Entities;
-@model List<Customer>
+﻿@model CustomerActiveViewModel
 
 @{
     ViewData["Title"] = "All Customers";
@@ -30,7 +29,7 @@
             </tr>
         </thead>
         <tbody>
-            @foreach (var customer in Model)
+            @foreach (var customer in Model.Customers)
             {
                 <tr>
                     <td>@customer.Name</td>
@@ -47,13 +46,21 @@
             }
         </tbody>
     </table>
-    <p>
-        <a asp-controller="Customer" asp-action="Customers" asp-route-lowerBound="A" asp-route-upperBound="E">A-E</a>
-        |
-        <a asp-controller="Customer" asp-action="Customers" asp-route-lowerBound="F" asp-route-upperBound="K">F-K</a>
-        |
-        <a asp-controller="Customer" asp-action="Customers" asp-route-lowerBound="L" asp-route-upperBound="R">L-R</a>
-        |
-        <a asp-controller="Customer" asp-action="Customers" asp-route-lowerBound="S" asp-route-upperBound="Z">S-Z</a>
-    </p>
+    <nav>
+        <ul class="pagination">
+            <li class="page-item @(Model.Active == "A-E" ? "active" : null)">
+                <a class="page-link" asp-controller="Customer" asp-action="Customers" asp-route-lowerBound="A" asp-route-upperBound="E">A-E</a>
+            </li>
+            <li class="page-item @(Model.Active == "F-K" ? "active" : null)">
+                <a class="page-link" asp-controller="Customer" asp-action="Customers" asp-route-lowerBound="F" asp-route-upperBound="K">F-K</a>
+            </li>
+            <li class="page-item @(Model.Active == "L-R" ? "active" : null)">
+                <a class="page-link" asp-controller="Customer" asp-action="Customers" asp-route-lowerBound="L" asp-route-upperBound="R">L-R</a>
+            </li>
+            <li class="page-item @(Model.Active == "S-Z" ? "active" : null)">
+                <a class="page-link" asp-controller="Customer" asp-action="Customers" asp-route-lowerBound="S" asp-route-upperBound="Z">S-Z</a>
+
+            </li>
+        </ul>
+    </nav>
 </div>
