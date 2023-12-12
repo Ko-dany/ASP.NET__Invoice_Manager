@@ -42,8 +42,6 @@ namespace Assignment3_Dahyun_Ko.Controllers
         {
             if (ModelState.IsValid)
             {
-                //if (String.IsNullOrEmpty(customer.Location?.Trim())) customer.Location = "";
-
                 if (customer.CustomerId == 0) ctx.Customers.Add(customer);
                 else ctx.Customers.Update(customer);
 
