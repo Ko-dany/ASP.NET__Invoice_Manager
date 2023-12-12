@@ -1,6 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 
-namespace Assignment3_Dahyun_Ko.Entities
+namespace Customers.Entities
 {
     public class CustomerInvoiceDBContext : DbContext
     {

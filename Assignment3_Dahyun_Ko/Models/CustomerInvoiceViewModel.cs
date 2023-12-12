@@ -1,4 +1,4 @@
-﻿using Assignment3_Dahyun_Ko.Entities;
+﻿using Customers.Entities;
 
 namespace Assignment3_Dahyun_Ko.Models
 {
