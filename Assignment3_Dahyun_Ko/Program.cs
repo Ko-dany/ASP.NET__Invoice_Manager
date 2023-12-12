@@ -1,4 +1,5 @@
-using Assignment3_Dahyun_Ko.Entities;
+using Customers.Entities;
+using Customers.Service;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
@@ -8,11 +9,15 @@ var builder = WebApplication.CreateBuilder(args);
 var connectionString = builder.Configuration.GetConnectionString("CustomerInvoiceDB");
 builder.Services.AddDbContext<CustomerInvoiceDBContext>(options =>
     options.UseSqlServer(connectionString));
-builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 
+/* Register the service */
+builder.Services.AddScoped<ICustomerService, CustomerService>();
+
+builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
     .AddEntityFrameworkStores<CustomerInvoiceDBContext>();
 builder.Services.AddControllersWithViews();
+
 
 var app = builder.Build();
 

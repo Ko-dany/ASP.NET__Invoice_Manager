@@ -3,38 +3,39 @@ using Assignment3_Dahyun_Ko.Models;
 using Microsoft.EntityFrameworkCore;
 using System.IO;
 using Customers.Entities;
+using Customers.Service;
 
 namespace Assignment3_Dahyun_Ko.Controllers
 {
     public class CustomerController : Controller
     {
-        private CustomerInvoiceDBContext ctx { get; set; }
-
-        public CustomerController(CustomerInvoiceDBContext ctx)
+        private ICustomerService customerService { get; }
+        
+        public CustomerController(ICustomerService customerService)
         {
-            this.ctx = ctx;
+            this.customerService = customerService;
         }
 
-        /*********** Return the list of customers ***********/
-        public IActionResult Customers(string lowerBound, string upperBound)
+        /*********** List of Customers ***********/
+        public IActionResult Customers(string lowerBound = "A", string upperBound = "E")
         {
-            var customers = ctx.Customers.Where(c => c.Name.ToLower().Substring(0, 1).CompareTo(lowerBound) >= 0 && c.Name.ToLower().Substring(0, 1).CompareTo(upperBound) <= 0).OrderBy(m=>m.Name).ToList();
+            var customers = customerService.GetCustomersFromTo(lowerBound, upperBound);
             return View(customers);
         }
 
-        /*********** Add a new customer ***********/
+        /*********** Add ***********/
         public IActionResult Add()
         {
             ViewBag.Action = "Add";
             return View("Edit", new Customer());
         }
 
-        /*********** Edit an existing customer ***********/
+        /*********** Edit ***********/
         [HttpGet]
         public IActionResult Edit(int id)
         {
             ViewBag.Action = "Edit";
-            Customer? customer = ctx.Customers.Find(id);
+            Customer? customer = customerService.GetCustomerById(id);
             return View(customer);
         }
 
@@ -43,11 +44,7 @@ namespace Assignment3_Dahyun_Ko.Controllers
         {
             if (ModelState.IsValid)
             {
-                if (customer.CustomerId == 0) ctx.Customers.Add(customer);
-                else ctx.Customers.Update(customer);
-
-                ctx.SaveChanges();
-
+                customerService.EditCustomer(customer);
                 return RedirectToAction("Customers", new { id = customer.CustomerId });
             }
             else
@@ -57,10 +54,43 @@ namespace Assignment3_Dahyun_Ko.Controllers
             return View(customer);
         }
 
-        /*********** Return the list of invoices of the selected customer ***********/
+        /*********** Delete ***********/
+
+        [HttpGet]
+        public IActionResult Delete(int id)
+        {
+            var customer = customerService.GetCustomerById(id);
+            if(customer == null)
+            {
+                return NotFound();
+            }
+
+            customerService.UpdateDeletingStatus(customer);
+            TempData["Deletion Message"] = $"The customer \"{customer.Name}\" is deleted.";
+            TempData["CustomerId"] = customer.CustomerId;
+
+            return RedirectToAction("Customers", "Customer");
+        }
+
+        /*********** Undelete ***********/
+
+        [HttpGet]
+        public IActionResult Undelete(int id)
+        {
+            var customer = customerService.GetCustomerById(id);
+            if (customer == null)
+            {
+                return NotFound();
+            }
+            customerService.UpdateDeletingStatus(customer);
+
+            return RedirectToAction("Customers", "Customer");
+        }
+
+        /*********** List of Invoices ***********/
         public IActionResult Invoices(int id)
         {
-            var customer = ctx.Customers.Include(c => c.Invoices).ThenInclude(i=>i.InvoiceLineItems).Where(i => i.CustomerId == id).FirstOrDefault();
+            var customer = customerService.GetInvoicesById(id);
             Invoice newInvoice = new Invoice();
             newInvoice.InvoiceLineItems = new List<InvoiceLineItem>();
 
