@@ -16,9 +16,9 @@ namespace Assignment3_Dahyun_Ko.Controllers
         }
 
         /*********** Return the list of customers ***********/
-        public IActionResult Customers()
+        public IActionResult Customers(string lowerBound, string upperBound)
         {
-            var customers = ctx.Customers.Include(c => c.Invoices).ToList();
+            var customers = ctx.Customers.Where(c => c.Name.ToLower().Substring(0, 1).CompareTo(lowerBound) >= 0 && c.Name.ToLower().Substring(0, 1).CompareTo(upperBound) <= 0).OrderBy(m=>m.Name).ToList();
             return View(customers);
         }
 
