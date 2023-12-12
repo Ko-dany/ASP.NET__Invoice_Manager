@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Assignment3_Dahyun_Ko.Entities;
+using Assignment3_Dahyun_Ko.Models;
 using Microsoft.EntityFrameworkCore;
 using System.IO;
 
@@ -56,6 +57,31 @@ namespace Assignment3_Dahyun_Ko.Controllers
             return View(customer);
         }
 
+        /*********** Return the list of invoices of the selected customer ***********/
+        public IActionResult Invoices(int id)
+        {
+            var customer = ctx.Customers.Include(c => c.Invoices).ThenInclude(i=>i.InvoiceLineItems).Where(i => i.CustomerId == id).FirstOrDefault();
+            Invoice newInvoice = new Invoice();
+            newInvoice.InvoiceLineItems = new List<InvoiceLineItem>();
+
+            if (customer != null)
+            {
+                CustomerInvoiceViewModel ciViewModel = new CustomerInvoiceViewModel()
+                {
+                    Customer = customer,
+                    Invoice = newInvoice,
+                    InvoiceLineItem = new InvoiceLineItem()
+                };
+
+                return View(ciViewModel);
+            }
+            else
+            {
+                return NotFound();
+            }
+        }
+
+    
 
     }
 }

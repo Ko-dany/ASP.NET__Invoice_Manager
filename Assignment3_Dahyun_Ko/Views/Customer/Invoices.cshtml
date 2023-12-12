@@ -1,0 +1,80 @@
+﻿@model CustomerInvoiceViewModel
+
+@{
+    ViewData["Title"] = "Invoices for " + Model.Customer.Name;
+}
+
+<div class="row justify-content-between">
+    <div class="col-5">
+        <h1 class="display-6">@ViewData["Title"]</h1>
+        <h3 class="display-6">Address: @Model.Customer.Address1 @Model.Customer.Address2</h3>
+        <table class="table table-bordered table-striped caption-top">
+            <caption>Invoices</caption>
+            <thead>
+                <tr>
+                    <th>Invoice #</th>
+                    <th>Due date</th>
+                    <th>Amount paid</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var invoice in Model.Customer.Invoices)
+                {
+                    <tr>
+                        <td>@invoice.InvoiceId</td>
+                        <td>@invoice.InvoiceDueDate</td>
+                        <td>@invoice.PaymentTotal</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+        <form asp-controller="Customer" asp-action="Invoice" method="post">
+            <div class="form-group">
+                <label asp-for="@Model.Invoice.InvoiceDueDate">Date</label>
+                <input asp-for="@Model.Invoice.InvoiceDueDate" type="text" class="form-control" />
+            </div>
+            <div class="form-group">
+                <label asp-for="@Model.Invoice.PaymentTerms.Description">Terms</label>
+                <input asp-for="@Model.Invoice.PaymentTerms.Description" type="text" class="form-control" />
+            </div>
+            <!-- Make a tag helper to generate the dropdown selection -->
+            <input type="hidden" asp-for="@Model.Invoice.InvoiceId" />
+            <button type="submit" class="btn btn-primary mt-3">Add Invoice</button>
+        </form>
+    </div>
+    <div class="col-5">
+        <a asp-controller="Customer" asp-action="Customers">Return to A-E Customers</a>
+        <h3 class="display-5">Terms: @Model.Invoice.InvoiceDueDate</h3>
+        <table class="table table-bordered table-striped caption-top">
+            <caption>Line items for invoices #</caption>
+            <thead>
+                <tr>
+                    <th>Description</th>
+                    <th>Due Amount</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model.Invoice.InvoiceLineItems)
+                {
+                    <tr>
+                        <td>@item.Description</td>
+                        <td>@item.Amount</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+        <p>Total: </p>
+        <form asp-controller="Customer" asp-action="LineItems" method="post">
+            <div class="form-group">
+                <label asp-for="@Model.InvoiceLineItem.Description">Description</label>
+                <input asp-for="@Model.InvoiceLineItem.Description" type="text" class="form-control" />
+            </div>
+            <div class="form-group">
+                <label asp-for="@Model.InvoiceLineItem.Amount">Amount</label>
+                <input asp-for="@Model.InvoiceLineItem.Amount" type="text" class="form-control" />
+            </div>
+            <input type="hidden" asp-for="@Model.InvoiceLineItem.InvoiceLineItemId" />
+            <button type="submit" class="btn btn-primary mt-3">Add Line item</button>
+        </form>
+    </div>
+</div>
