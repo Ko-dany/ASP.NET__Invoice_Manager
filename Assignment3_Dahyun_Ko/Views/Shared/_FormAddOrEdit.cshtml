@@ -5,7 +5,10 @@
     <h2 class="display-4">@ViewData["Title"]</h2>
 
     <form asp-controller="Customer" asp-action="Edit" method="post">
-        <div asp-validation-summary="None" class="text-danger"></div>
+        @if (!ViewData.ModelState.IsValid)
+        {
+            <div class="text-danger bg-info">You input invalid valuee.</div>
+        }
         <div class="form-group">
             @{
                 var nameValidationErrors = ViewData.ModelState["Name"]?.Errors;

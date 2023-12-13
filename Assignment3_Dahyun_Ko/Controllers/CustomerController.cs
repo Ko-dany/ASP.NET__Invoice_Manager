@@ -141,6 +141,5 @@ namespace Assignment3_Dahyun_Ko.Controllers
             return RedirectToAction("Invoices", "Customer", new { customerId = customerId, invoiceId = invoiceId });
         }
 
-
     }
 }
