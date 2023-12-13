@@ -4,18 +4,16 @@ using Customers.Entities;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
-using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
 
-namespace Assignment3_Dahyun_Ko.Migrations
+namespace Customers.Migrations
 {
     [DbContext(typeof(CustomerInvoiceDBContext))]
-    [Migration("20231211192401_Initial")]
-    partial class Initial
+    partial class CustomerInvoiceDBContextModelSnapshot : ModelSnapshot
     {
-        protected override void BuildTargetModel(ModelBuilder modelBuilder)
+        protected override void BuildModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -24,7 +22,7 @@ namespace Assignment3_Dahyun_Ko.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder, 1L, 1);
 
-            modelBuilder.Entity("Assignment3_Dahyun_Ko.Entities.Customer", b =>
+            modelBuilder.Entity("Customers.Entities.Customer", b =>
                 {
                     b.Property<int>("CustomerId")
                         .ValueGeneratedOnAdd()
@@ -33,12 +31,14 @@ namespace Assignment3_Dahyun_Ko.Migrations
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("CustomerId"), 1L, 1);
 
                     b.Property<string>("Address1")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Address2")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("City")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("ContactEmail")
@@ -58,12 +58,15 @@ namespace Assignment3_Dahyun_Ko.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Phone")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("ProvinceOrState")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("ZipOrPostalCode")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("CustomerId");
@@ -183,7 +186,7 @@ namespace Assignment3_Dahyun_Ko.Migrations
                         });
                 });
 
-            modelBuilder.Entity("Assignment3_Dahyun_Ko.Entities.Invoice", b =>
+            modelBuilder.Entity("Customers.Entities.Invoice", b =>
                 {
                     b.Property<int>("InvoiceId")
                         .ValueGeneratedOnAdd()
@@ -313,7 +316,7 @@ namespace Assignment3_Dahyun_Ko.Migrations
                         });
                 });
 
-            modelBuilder.Entity("Assignment3_Dahyun_Ko.Entities.InvoiceLineItem", b =>
+            modelBuilder.Entity("Customers.Entities.InvoiceLineItem", b =>
                 {
                     b.Property<int>("InvoiceLineItemId")
                         .ValueGeneratedOnAdd()
@@ -493,7 +496,7 @@ namespace Assignment3_Dahyun_Ko.Migrations
                         });
                 });
 
-            modelBuilder.Entity("Assignment3_Dahyun_Ko.Entities.PaymentTerms", b =>
+            modelBuilder.Entity("Customers.Entities.PaymentTerms", b =>
                 {
                     b.Property<int>("PaymentTermsId")
                         .ValueGeneratedOnAdd()
@@ -545,41 +548,43 @@ namespace Assignment3_Dahyun_Ko.Migrations
                         });
                 });
 
-            modelBuilder.Entity("Assignment3_Dahyun_Ko.Entities.Invoice", b =>
+            modelBuilder.Entity("Customers.Entities.Invoice", b =>
                 {
-                    b.HasOne("Assignment3_Dahyun_Ko.Entities.Customer", null)
+                    b.HasOne("Customers.Entities.Customer", "Customer")
                         .WithMany("Invoices")
                         .HasForeignKey("CustomerId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Assignment3_Dahyun_Ko.Entities.PaymentTerms", "PaymentTerms")
+                    b.HasOne("Customers.Entities.PaymentTerms", "PaymentTerms")
                         .WithMany("Invoices")
                         .HasForeignKey("PaymentTermsId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.Navigation("Customer");
+
                     b.Navigation("PaymentTerms");
                 });
 
-            modelBuilder.Entity("Assignment3_Dahyun_Ko.Entities.InvoiceLineItem", b =>
+            modelBuilder.Entity("Customers.Entities.InvoiceLineItem", b =>
                 {
-                    b.HasOne("Assignment3_Dahyun_Ko.Entities.Invoice", null)
+                    b.HasOne("Customers.Entities.Invoice", null)
                         .WithMany("InvoiceLineItems")
                         .HasForeignKey("InvoiceId");
                 });
 
-            modelBuilder.Entity("Assignment3_Dahyun_Ko.Entities.Customer", b =>
+            modelBuilder.Entity("Customers.Entities.Customer", b =>
                 {
                     b.Navigation("Invoices");
                 });
 
-            modelBuilder.Entity("Assignment3_Dahyun_Ko.Entities.Invoice", b =>
+            modelBuilder.Entity("Customers.Entities.Invoice", b =>
                 {
                     b.Navigation("InvoiceLineItems");
                 });
 
-            modelBuilder.Entity("Assignment3_Dahyun_Ko.Entities.PaymentTerms", b =>
+            modelBuilder.Entity("Customers.Entities.PaymentTerms", b =>
                 {
                     b.Navigation("Invoices");
                 });

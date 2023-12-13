@@ -35,15 +35,37 @@ namespace Customers.Service
             return customer;
         }
 
-        public Customer? GetInvoicesById(int customerId)
-        {
-            return customerInvoiceDBContext.Customers.Include(c => c.Invoices).ThenInclude(i => i.InvoiceLineItems).Where(i => i.CustomerId == customerId).FirstOrDefault();
-        }
-
         public void UpdateDeletingStatus(Customer customer)
         {
             customer.IsDeleted = !customer.IsDeleted;
             customerInvoiceDBContext.SaveChanges();
         }
+
+        public Customer? GetInvoicesById(int customerId)
+        {
+            return customerInvoiceDBContext.Customers.Include(c => c.Invoices).ThenInclude(i => i.InvoiceLineItems).Where(i => i.CustomerId == customerId).FirstOrDefault();
+        }
+
+        public List<PaymentTerms> GetPaymentTerms()
+        {
+            return customerInvoiceDBContext.PaymentTermSet.OrderBy(p => p.PaymentTermsId).ToList();
+        }
+
+        public Invoice GetSelectedInvoiceById(int invoiceId)
+        {
+            return customerInvoiceDBContext.Invoices.Include(i => i.InvoiceLineItems).Where(i => i.InvoiceId == invoiceId).FirstOrDefault();
+        }
+
+        public void AddNewInvoice(Invoice newInvoice)
+        {
+            customerInvoiceDBContext.Invoices.Add(newInvoice);
+            customerInvoiceDBContext.SaveChanges();
+        }
+        public void AddNewLineItem(InvoiceLineItem newInvoiceLineItem)
+        {
+            customerInvoiceDBContext.InvoiceLineItems.Add(newInvoiceLineItem);
+            customerInvoiceDBContext.SaveChanges();
+        }
+
     }
 }

@@ -1,13 +1,15 @@
-﻿@model CustomerInvoiceViewModel
+﻿@using Customers.Entities;
+@using System.Globalization;
+@model CustomerInvoiceViewModel
 
 @{
-    ViewData["Title"] = "Invoices for " + Model.Customer.Name;
+    ViewData["Title"] = $"Invoices for \"{Model.Customer.Name}\"";
 }
 
 <div class="row justify-content-between">
-    <div class="col-5">
-        <h1 class="display-6">@ViewData["Title"]</h1>
-        <h3 class="display-6">Address: @Model.Customer.Address1 @Model.Customer.Address2</h3>
+    <div class="col-7">
+        <p class="lead">@ViewData["Title"]</p>
+        <p>Address: @Model.Customer.Address1 @Model.Customer.Address2</p>
         <table class="table table-bordered table-striped caption-top">
             <caption>Invoices</caption>
             <thead>
@@ -20,33 +22,43 @@
             <tbody>
                 @foreach (var invoice in Model.Customer.Invoices)
                 {
-                    <tr>
-                        <td>@invoice.InvoiceId</td>
+                    string selectedInvoice = (@Model.SelectedInvoice.InvoiceId == invoice.InvoiceId) ? "bg-info" : "";
+
+                    <tr class="@selectedInvoice">
+                        <td><a asp-controller="Customer" asp-action="Invoices" asp-route-customerId="@Model.Customer.CustomerId" asp-route-invoiceId="@invoice.InvoiceId">@invoice.InvoiceId</a></td>
                         <td>@invoice.InvoiceDueDate</td>
                         <td>@invoice.PaymentTotal</td>
                     </tr>
                 }
             </tbody>
         </table>
-        <form asp-controller="Customer" asp-action="Invoice" method="post">
+        <form asp-controller="Customer" asp-action="AddInvoice" method="post" asp-route-customerId="@Model.Customer.CustomerId" >
             <div class="form-group">
-                <label asp-for="@Model.Invoice.InvoiceDueDate">Date</label>
-                <input asp-for="@Model.Invoice.InvoiceDueDate" type="text" class="form-control" />
+                <label asp-for="@Model.NewInvoice.InvoiceDate">Date</label>
+                <input asp-for="@Model.NewInvoice.InvoiceDate" type="date" class="form-control" />
             </div>
             <div class="form-group">
-                <label asp-for="@Model.Invoice.PaymentTerms.Description">Terms</label>
-                <input asp-for="@Model.Invoice.PaymentTerms.Description" type="text" class="form-control" />
+                <label asp-for="@Model.NewInvoice.PaymentTermsId">Terms</label>
+                <select asp-for="@Model.NewInvoice.PaymentTermsId" type="text" class="form-control">
+                    <option value="">Select a term...</option>
+                    @if(Model != null && Model.PaymentTermsList != null)
+                    {
+                        foreach (PaymentTerms pt in Model.PaymentTermsList)
+                        {
+                            <option value="@pt.PaymentTermsId">@pt.Description</option>
+                        }
+                    }
+                </select>
             </div>
-            <!-- Make a tag helper to generate the dropdown selection -->
-            <input type="hidden" asp-for="@Model.Invoice.InvoiceId" />
+            <input type="hidden" asp-for="@Model.NewInvoice.InvoiceId" />
             <button type="submit" class="btn btn-primary mt-3">Add Invoice</button>
         </form>
     </div>
-    <div class="col-5">
+    <div class="col-4">
         <a asp-controller="Customer" asp-action="Customers">Return to A-E Customers</a>
-        <h3 class="display-5">Terms: @Model.Invoice.InvoiceDueDate</h3>
+        <p>Terms: @Model.SelectedInvoice.PaymentTerms.DueDays days</p>
         <table class="table table-bordered table-striped caption-top">
-            <caption>Line items for invoices #</caption>
+            <caption>Line items for invoices # @Model.SelectedInvoice.InvoiceId</caption>
             <thead>
                 <tr>
                     <th>Description</th>
@@ -54,26 +66,33 @@
                 </tr>
             </thead>
             <tbody>
-                @foreach (var item in Model.Invoice.InvoiceLineItems)
+                @foreach (var item in Model.SelectedInvoice.InvoiceLineItems)
                 {
                     <tr>
                         <td>@item.Description</td>
-                        <td>@item.Amount</td>
+                        <td>@String.Format("{0:C}", Convert.ToInt32(item.Amount))</td>
                     </tr>
                 }
             </tbody>
         </table>
-        <p>Total: </p>
-        <form asp-controller="Customer" asp-action="LineItems" method="post">
+        @{
+            double? total = 0.00;
+            foreach (var item in Model.SelectedInvoice.InvoiceLineItems)
+            {
+                total += item.Amount;
+            }
+        }
+        <p>Total: @String.Format("{0:C}", Convert.ToInt32(total))</p>
+        <form asp-controller="Customer" asp-action="AddLineItem" method="post" asp-route-customerId="@Model.Customer.CustomerId">
             <div class="form-group">
-                <label asp-for="@Model.InvoiceLineItem.Description">Description</label>
-                <input asp-for="@Model.InvoiceLineItem.Description" type="text" class="form-control" />
+                <label asp-for="@Model.NewInvoiceLineItem.Description">Description</label>
+                <input asp-for="@Model.NewInvoiceLineItem.Description" type="text" class="form-control" />
             </div>
             <div class="form-group">
-                <label asp-for="@Model.InvoiceLineItem.Amount">Amount</label>
-                <input asp-for="@Model.InvoiceLineItem.Amount" type="text" class="form-control" />
+                <label asp-for="@Model.NewInvoiceLineItem.Amount">Amount</label>
+                <input asp-for="@Model.NewInvoiceLineItem.Amount" type="text" class="form-control" />
             </div>
-            <input type="hidden" asp-for="@Model.InvoiceLineItem.InvoiceLineItemId" />
+            <input type="hidden" asp-for="@Model.NewInvoiceLineItem.InvoiceLineItemId" />
             <button type="submit" class="btn btn-primary mt-3">Add Line item</button>
         </form>
     </div>

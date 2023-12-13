@@ -36,7 +36,7 @@
                         <td>@customer.Name</td>
                         <td>@customer.Address1 @customer.Address2</td>
                         <td>
-                            <a asp-controller="Customer" asp-action="Invoices" asp-route-id="@customer.CustomerId">Invoices</a>
+                            <a asp-controller="Customer" asp-action="Invoices" asp-route-customerId="@customer.CustomerId">Invoices</a>
                             |
                             <a asp-controller="Customer" asp-action="Edit" asp-route-id="@customer.CustomerId">Edit</a>
                             |

@@ -93,21 +93,23 @@ namespace Assignment3_Dahyun_Ko.Controllers
         }
 
         /*********** List of Invoices ***********/
-        public IActionResult Invoices(int id)
+        public IActionResult Invoices(int customerId, int invoiceId=1)
         {
-            var customer = customerService.GetInvoicesById(id);
-            Invoice newInvoice = new Invoice();
-            newInvoice.InvoiceLineItems = new List<InvoiceLineItem>();
-
+            var customer = customerService.GetInvoicesById(customerId);
+            var invoices = customer.Invoices;
+            var paymentTerms = customerService.GetPaymentTerms();
+            var selectedInvoice = customerService.GetSelectedInvoiceById(invoiceId);
             if (customer != null)
             {
                 CustomerInvoiceViewModel ciViewModel = new CustomerInvoiceViewModel()
                 {
                     Customer = customer,
-                    Invoice = newInvoice,
-                    InvoiceLineItem = new InvoiceLineItem()
+                    Invoices = invoices,
+                    SelectedInvoice = selectedInvoice,
+                    PaymentTermsList = paymentTerms,
+                    NewInvoice = new Invoice(),
+                    NewInvoiceLineItem = new InvoiceLineItem()
                 };
-
                 return View(ciViewModel);
             }
             else
@@ -116,7 +118,29 @@ namespace Assignment3_Dahyun_Ko.Controllers
             }
         }
 
-    
+        public IActionResult AddInvoice(CustomerInvoiceViewModel ciViewModel, int customerId, int invoiceId=1)
+        {
+            if (ModelState.IsValid)
+            {
+                Invoice invoice = ciViewModel.NewInvoice;
+                customerService.AddNewInvoice(invoice);
+            }
+
+            return RedirectToAction("Invoices", "Customer", new { customerId = customerId, invoiceId= invoiceId });
+        }
+
+
+        public IActionResult AddLineItem(CustomerInvoiceViewModel ciViewModel, int customerId, int invoiceId = 1)
+        {
+            if (ModelState.IsValid)
+            {
+                InvoiceLineItem invoiceLineItem = ciViewModel.NewInvoiceLineItem;
+                customerService.AddNewLineItem(invoiceLineItem);
+            }
+
+            return RedirectToAction("Invoices", "Customer", new { customerId = customerId, invoiceId = invoiceId });
+        }
+
 
     }
 }
