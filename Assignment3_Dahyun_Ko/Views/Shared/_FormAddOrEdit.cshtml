@@ -6,15 +6,22 @@
 
     <form asp-controller="Customer" asp-action="Edit" method="post">
         <div asp-validation-summary="None" class="text-danger"></div>
-
         <div class="form-group">
+            @{
+                var nameValidationErrors = ViewData.ModelState["Name"]?.Errors;
+                var isNameInvalid = nameValidationErrors != null && nameValidationErrors.Any();
+            }
             <label asp-for="@Model.Name">Name</label>
-            <input asp-for="@Model.Name" type="text" class="form-control border border-danger bg-warning bg-gradient" />
+            <input asp-for="@Model.Name" type="text" class="form-control @(isNameInvalid ? "is-invalid bg-warning" : "")"/>
             <span asp-validation-for="@Model.Name" class="text-danger"></span>
         </div>
         <div class="form-group">
+            @{
+                nameValidationErrors = ViewData.ModelState["Address1"]?.Errors;
+                isNameInvalid = nameValidationErrors != null && nameValidationErrors.Any();
+            }
             <label asp-for="@Model.Address1">Address1</label>
-            <input asp-for="@Model.Address1" type="text" class="form-control" />
+            <input asp-for="@Model.Address1" type="text" class="form-control @(isNameInvalid ? "is-invalid bg-warning" : "")" />
             <span asp-validation-for="@Model.Address1" class="text-danger"></span>
         </div>
         <div class="form-group">
@@ -22,24 +29,40 @@
             <input asp-for="@Model.Address2" type="text" class="form-control" />
         </div>
         <div class="form-group">
+            @{
+                nameValidationErrors = ViewData.ModelState["City"]?.Errors;
+                isNameInvalid = nameValidationErrors != null && nameValidationErrors.Any();
+            }
             <label asp-for="@Model.City">City</label>
-            <input asp-for="@Model.City" type="text" class="form-control" />
+            <input asp-for="@Model.City" type="text" class="form-control @(isNameInvalid ? "is-invalid bg-warning" : "")" />
             <span asp-validation-for="@Model.City" class="text-danger"></span>
         </div>
         <div class="form-group">
+            @{
+                nameValidationErrors = ViewData.ModelState["ProvinceOrState"]?.Errors;
+                isNameInvalid = nameValidationErrors != null && nameValidationErrors.Any();
+            }
             <label asp-for="@Model.ProvinceOrState">Province/State</label>
-            <input asp-for="@Model.ProvinceOrState" type="text" class="form-control" />
+            <input asp-for="@Model.ProvinceOrState" type="text" class="form-control @(isNameInvalid ? "is-invalid bg-warning" : "")" />
             <span asp-validation-for="@Model.ProvinceOrState" class="text-danger"></span>
 
         </div>
         <div class="form-group">
+            @{
+                nameValidationErrors = ViewData.ModelState["ZipOrPostalCode"]?.Errors;
+                isNameInvalid = nameValidationErrors != null && nameValidationErrors.Any();
+            }
             <label asp-for="@Model.ZipOrPostalCode">Zip/Postal Code</label>
-            <input asp-for="@Model.ZipOrPostalCode" type="text" class="form-control" />
+            <input asp-for="@Model.ZipOrPostalCode" type="text" class="form-control @(isNameInvalid ? "is-invalid bg-warning" : "")" />
             <span asp-validation-for="@Model.ZipOrPostalCode" class="text-danger"></span>
         </div>
         <div class="form-group">
+            @{
+                nameValidationErrors = ViewData.ModelState["Phone"]?.Errors;
+                isNameInvalid = nameValidationErrors != null && nameValidationErrors.Any();
+            }
             <label asp-for="@Model.Phone">Phone</label>
-            <input asp-for="@Model.Phone" type="text" class="form-control" />
+            <input asp-for="@Model.Phone" type="text" class="form-control @(isNameInvalid ? "is-invalid bg-warning" : "")" />
             <span asp-validation-for="@Model.Phone" class="text-danger"></span>
         </div>
         <div class="form-group">
@@ -51,8 +74,12 @@
             <input asp-for="@Model.ContactLastName" type="text" class="form-control" />
         </div>
         <div class="form-group">
+            @{
+                nameValidationErrors = ViewData.ModelState["ContactEmail"]?.Errors;
+                isNameInvalid = nameValidationErrors != null && nameValidationErrors.Any();
+            }
             <label asp-for="@Model.ContactEmail">Contact Email</label>
-            <input asp-for="@Model.ContactEmail" type="text" class="form-control" />
+            <input asp-for="@Model.ContactEmail" type="text" class="form-control @(isNameInvalid ? "is-invalid bg-warning" : "")" />
             <span asp-validation-for="@Model.ContactEmail" class="text-danger"></span>
         </div>
         <input type="hidden" asp-for="@Model.CustomerId" />
