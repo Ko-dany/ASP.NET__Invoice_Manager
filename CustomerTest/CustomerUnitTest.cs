@@ -7,7 +7,9 @@ namespace CustomerTest
     public class CustomerUnitTest
     {
         [Fact]
-        public void ReturnTrueIfPostalCodeIsValid()
+        public void CheckIfPostalCodeIsValid()
+        // Check the Postal code format using Regex
+        // Returns true if the format is valid
         {
             //Arrange
             Customer customer = new Customer()
@@ -32,7 +34,9 @@ namespace CustomerTest
         }
 
         [Fact]
-        public void ReturnTrueIfPhoneNumberIsValid()
+        public void CheckIfPhoneIsInvalid()
+        // Check the Phone format using Regex
+        // Returns true if the format is INVALID
         {
             //Arrange
             Customer customer = new Customer()
@@ -43,7 +47,7 @@ namespace CustomerTest
                 City = "Waterloo",
                 ProvinceOrState = "ON",
                 ZipOrPostalCode = "N2J 2A4",
-                Phone = "416-123-4567",
+                Phone = "416-123-456",
             };
 
             //Act
@@ -53,7 +57,7 @@ namespace CustomerTest
             if (phoneRegex.IsMatch(customer.Phone)) { phoneIsValid = true; }
 
             //Assert
-            Assert.True(phoneIsValid);
+            Assert.False(phoneIsValid);
         }
     }
 }

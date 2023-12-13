@@ -12,9 +12,11 @@ namespace CustomerTest
     {
         [Fact]
         public void CheckIfTheTotalIsCorrect()
+        // Input dummy line item data and calculate the sum
+        // Compare the result with expected value
         {
             //Arrange
-            double? result = 500;
+            double? expected = 500;
 
             Invoice invoice = new Invoice()
             {
@@ -32,7 +34,7 @@ namespace CustomerTest
             double? total = invoice.InvoiceLineItems.Sum(i => i.Amount);
 
             //Assert
-            Assert.Equal(total, result);
+            Assert.Equal(total, expected);
         }
     }
 }

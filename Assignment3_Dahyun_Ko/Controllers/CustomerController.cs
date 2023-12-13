@@ -1,4 +1,11 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿/*
+ * Program: PROG2230-SEC4
+ * Purpose: Assignment 5
+ * Revision History:
+ *      created by Dahyun Ko, Dec/13/2023
+ */
+
+using Microsoft.AspNetCore.Mvc;
 using Assignment3_Dahyun_Ko.Models;
 using Microsoft.EntityFrameworkCore;
 using System.IO;
@@ -118,23 +125,26 @@ namespace Assignment3_Dahyun_Ko.Controllers
             }
         }
 
+        /*********** Add New Invoice ***********/
         public IActionResult AddInvoice(CustomerInvoiceViewModel ciViewModel, int customerId, int invoiceId=1)
         {
             if (ModelState.IsValid)
             {
                 Invoice invoice = ciViewModel.NewInvoice;
+                invoice.CustomerId = customerId;
                 customerService.AddNewInvoice(invoice);
             }
 
             return RedirectToAction("Invoices", "Customer", new { customerId = customerId, invoiceId= invoiceId });
         }
 
-
-        public IActionResult AddLineItem(CustomerInvoiceViewModel ciViewModel, int customerId, int invoiceId = 1)
+        /*********** Add New Line Item ***********/
+        public IActionResult AddLineItem(CustomerInvoiceViewModel ciViewModel, int customerId, int invoiceId=1)
         {
             if (ModelState.IsValid)
             {
                 InvoiceLineItem invoiceLineItem = ciViewModel.NewInvoiceLineItem;
+                invoiceLineItem.InvoiceId = invoiceId;
                 customerService.AddNewLineItem(invoiceLineItem);
             }
 
