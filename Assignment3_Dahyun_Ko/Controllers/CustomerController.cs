@@ -100,12 +100,24 @@ namespace Assignment3_Dahyun_Ko.Controllers
         }
 
         /*********** List of Invoices ***********/
-        public IActionResult Invoices(int customerId, int invoiceId=1)
+        public IActionResult Invoices(int customerId, int invoiceId=0)
         {
             var customer = customerService.GetInvoicesById(customerId);
             var invoices = customer.Invoices;
-            var paymentTerms = customerService.GetPaymentTerms();
-            var selectedInvoice = customerService.GetSelectedInvoiceById(invoiceId);
+
+            Invoice selectedInvoice = null;
+            List<PaymentTerms> paymentTerms = null;
+
+            if (invoices != null && invoices.Any())
+            {
+                if (invoiceId == 0)
+                {
+                    invoiceId = invoices.OrderBy(i => i.InvoiceId).First().InvoiceId;
+                }
+                selectedInvoice = customerService.GetSelectedInvoiceById(invoiceId);
+                paymentTerms = customerService.GetPaymentTerms();
+            }
+
             if (customer != null)
             {
                 CustomerInvoiceViewModel ciViewModel = new CustomerInvoiceViewModel()
@@ -126,7 +138,7 @@ namespace Assignment3_Dahyun_Ko.Controllers
         }
 
         /*********** Add New Invoice ***********/
-        public IActionResult AddInvoice(CustomerInvoiceViewModel ciViewModel, int customerId, int invoiceId=1)
+        public IActionResult AddInvoice(CustomerInvoiceViewModel ciViewModel, int customerId, int invoiceId=0)
         {
             if (ModelState.IsValid)
             {
@@ -139,7 +151,7 @@ namespace Assignment3_Dahyun_Ko.Controllers
         }
 
         /*********** Add New Line Item ***********/
-        public IActionResult AddLineItem(CustomerInvoiceViewModel ciViewModel, int customerId, int invoiceId=1)
+        public IActionResult AddLineItem(CustomerInvoiceViewModel ciViewModel, int customerId, int invoiceId=0)
         {
             if (ModelState.IsValid)
             {

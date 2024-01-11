@@ -19,18 +19,18 @@
                     <th>Amount paid</th>
                 </tr>
             </thead>
-            <tbody>
-                @foreach (var invoice in Model.Customer.Invoices)
-                {
-                    string selectedInvoice = (@Model.SelectedInvoice.InvoiceId == invoice.InvoiceId) ? "bg-info" : "";
+                <tbody>
+                    @foreach (var invoice in Model.Customer.Invoices)
+                    {
+                        string selectedInvoice = (@Model.SelectedInvoice.InvoiceId == invoice.InvoiceId) ? "bg-info" : "";
 
-                    <tr class="@selectedInvoice">
-                        <td><a asp-controller="Customer" asp-action="Invoices" asp-route-customerId="@Model.Customer.CustomerId" asp-route-invoiceId="@invoice.InvoiceId">@invoice.InvoiceId</a></td>
-                        <td>@invoice.InvoiceDueDate</td>
-                        <td>@invoice.PaymentTotal</td>
-                    </tr>
-                }
-            </tbody>
+                        <tr class="@selectedInvoice">
+                            <td><a asp-controller="Customer" asp-action="Invoices" asp-route-customerId="@Model.Customer.CustomerId" asp-route-invoiceId="@invoice.InvoiceId">@invoice.InvoiceId</a></td>
+                            <td>@invoice.InvoiceDueDate</td>
+                            <td>@invoice.PaymentTotal</td>
+                        </tr>
+                    }
+                </tbody>
         </table>
         <form asp-controller="Customer" asp-action="AddInvoice" method="post" asp-route-customerId="@Model.Customer.CustomerId" >
             <div class="form-group">
@@ -56,7 +56,9 @@
     </div>
     <div class="col-4">
         <a asp-controller="Customer" asp-action="Customers">Return to A-E Customers</a>
-        <p>Terms: @Model.SelectedInvoice.PaymentTerms.DueDays days</p>
+        <p>
+            Terms: @Model.SelectedInvoice.PaymentTerms.DueDays days
+        </p>
         <table class="table table-bordered table-striped caption-top">
             <caption>Line items for invoices # @Model.SelectedInvoice.InvoiceId</caption>
             <thead>
@@ -65,16 +67,17 @@
                     <th>Due Amount</th>
                 </tr>
             </thead>
-            <tbody>
-                @foreach (var item in Model.SelectedInvoice.InvoiceLineItems)
-                {
-                    <tr>
-                        <td>@item.Description</td>
-                        <td>@String.Format("{0:C}", Convert.ToInt32(item.Amount))</td>
-                    </tr>
-                }
-            </tbody>
+                <tbody>
+                    @foreach (var item in Model.SelectedInvoice.InvoiceLineItems)
+                    {
+                        <tr>
+                            <td>@item.Description</td>
+                            <td>@String.Format("{0:C}", Convert.ToInt32(item.Amount))</td>
+                        </tr>
+                    }
+                </tbody>
         </table>
+
         @{
             double? total = 0.00;
             foreach (var item in Model.SelectedInvoice.InvoiceLineItems)
@@ -83,6 +86,7 @@
             }
         }
         <p>Total: @String.Format("{0:C}", Convert.ToInt32(total))</p>
+
         <form asp-controller="Customer" asp-action="AddLineItem" method="post" asp-route-customerId="@Model.Customer.CustomerId" asp-route-invoiceId="@Model.SelectedInvoice.InvoiceId">
             <div class="form-group">
                 <label asp-for="@Model.NewInvoiceLineItem.Description">Description</label>
