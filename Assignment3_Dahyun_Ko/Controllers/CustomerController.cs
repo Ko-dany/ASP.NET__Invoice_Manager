@@ -115,8 +115,8 @@ namespace Assignment3_Dahyun_Ko.Controllers
                     invoiceId = invoices.OrderBy(i => i.InvoiceId).First().InvoiceId;
                 }
                 selectedInvoice = customerService.GetSelectedInvoiceById(invoiceId);
-                paymentTerms = customerService.GetPaymentTerms();
             }
+            paymentTerms = customerService.GetPaymentTerms();
 
             if (customer != null)
             {

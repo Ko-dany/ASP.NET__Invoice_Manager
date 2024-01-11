@@ -4,6 +4,8 @@
 
 @{
     ViewData["Title"] = $"Invoices for \"{Model.Customer.Name}\"";
+    double? total = 0.00;
+
 }
 
 <div class="row justify-content-between">
@@ -20,6 +22,8 @@
                 </tr>
             </thead>
                 <tbody>
+                @if (Model.Customer.Invoices != null && Model.Customer.Invoices.Any())
+                {
                     @foreach (var invoice in Model.Customer.Invoices)
                     {
                         string selectedInvoice = (@Model.SelectedInvoice.InvoiceId == invoice.InvoiceId) ? "bg-info" : "";
@@ -30,6 +34,7 @@
                             <td>@invoice.PaymentTotal</td>
                         </tr>
                     }
+                }
                 </tbody>
         </table>
         <form asp-controller="Customer" asp-action="AddInvoice" method="post" asp-route-customerId="@Model.Customer.CustomerId" >
@@ -54,9 +59,13 @@
             <button type="submit" class="btn btn-primary mt-3">Add Invoice</button>
         </form>
     </div>
+
+
     <div class="col-4">
         <a asp-controller="Customer" asp-action="Customers">Return to A-E Customers</a>
-        <p>
+        @if (Model.Customer.Invoices != null && Model.Customer.Invoices.Any())
+        {
+            <p>
             Terms: @Model.SelectedInvoice.PaymentTerms.DueDays days
         </p>
         <table class="table table-bordered table-striped caption-top">
@@ -77,13 +86,9 @@
                     }
                 </tbody>
         </table>
-
-        @{
-            double? total = 0.00;
-            foreach (var item in Model.SelectedInvoice.InvoiceLineItems)
-            {
-                total += item.Amount;
-            }
+        @foreach (var item in Model.SelectedInvoice.InvoiceLineItems)
+        {
+            total += item.Amount;
         }
         <p>Total: @String.Format("{0:C}", Convert.ToInt32(total))</p>
 
@@ -99,5 +104,7 @@
             <input type="hidden" asp-for="@Model.NewInvoiceLineItem.InvoiceLineItemId" />
             <button type="submit" class="btn btn-primary mt-3">Add Line item</button>
         </form>
+        }
+        
     </div>
 </div>
