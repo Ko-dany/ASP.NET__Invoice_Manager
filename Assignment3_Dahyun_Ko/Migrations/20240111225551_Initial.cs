@@ -1,7 +1,9 @@
 ﻿using System;
 using Microsoft.EntityFrameworkCore.Migrations;
 
-namespace Customers.Migrations
+#nullable disable
+
+namespace Assignment3_Dahyun_Ko.Migrations
 {
     public partial class Initial : Migration
     {
@@ -50,7 +52,7 @@ namespace Customers.Migrations
                 {
                     InvoiceId = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    InvoiceDate = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    InvoiceDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     PaymentTotal = table.Column<double>(type: "float", nullable: true),
                     PaymentDate = table.Column<DateTime>(type: "datetime2", nullable: true),
                     PaymentTermsId = table.Column<int>(type: "int", nullable: false),

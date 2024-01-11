@@ -38,6 +38,7 @@
                 </tbody>
         </table>
         <form asp-controller="Customer" asp-action="AddInvoice" method="post" asp-route-customerId="@Model.Customer.CustomerId" >
+            <div asp-validation-summary="All" class="text-danger"></div>
             <div class="form-group">
                 <label asp-for="@Model.NewInvoice.InvoiceDate">Date</label>
                 <input asp-for="@Model.NewInvoice.InvoiceDate" type="date" class="form-control" />
@@ -93,6 +94,7 @@
         <p>Total: @String.Format("{0:C}", Convert.ToInt32(total))</p>
 
         <form asp-controller="Customer" asp-action="AddLineItem" method="post" asp-route-customerId="@Model.Customer.CustomerId" asp-route-invoiceId="@Model.SelectedInvoice.InvoiceId">
+            <div asp-validation-summary="All" class="text-danger"></div>
             <div class="form-group">
                 <label asp-for="@Model.NewInvoiceLineItem.Description">Description</label>
                 <input asp-for="@Model.NewInvoiceLineItem.Description" type="text" class="form-control" />

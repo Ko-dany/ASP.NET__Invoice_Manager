@@ -6,6 +6,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
+
+
 namespace Customers.Service
 {
     public class CustomerService : ICustomerService
@@ -19,7 +21,7 @@ namespace Customers.Service
 
         public List<Customer>? GetCustomersFromTo(string lowerBound = "A", string upperBound = "E")
         {
-            return customerInvoiceDBContext.Customers.Where(c => c.Name.ToUpper().Substring(0, 1).CompareTo(lowerBound) >= 0 && c.Name.ToUpper().Substring(0, 1).CompareTo(upperBound) <= 0).OrderBy(c=>c.Name).ToList();
+            return customerInvoiceDBContext.Customers.Where(c => c.Name.ToUpper().Substring(0, 1).CompareTo(lowerBound) >= 0 && c.Name.ToUpper().Substring(0, 1).CompareTo(upperBound) <= 0).OrderBy(c => c.Name).ToList();
         }
         public Customer? GetCustomerById(int customerId)
         {

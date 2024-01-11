@@ -4,18 +4,16 @@ using Customers.Entities;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
-using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
 
-namespace Customers.Migrations
+namespace Assignment3_Dahyun_Ko.Migrations
 {
     [DbContext(typeof(CustomerInvoiceDBContext))]
-    [Migration("20231212210557_Initial")]
-    partial class Initial
+    partial class CustomerInvoiceDBContextModelSnapshot : ModelSnapshot
     {
-        protected override void BuildTargetModel(ModelBuilder modelBuilder)
+        protected override void BuildModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -200,6 +198,7 @@ namespace Customers.Migrations
                         .HasColumnType("int");
 
                     b.Property<DateTime?>("InvoiceDate")
+                        .IsRequired()
                         .HasColumnType("datetime2");
 
                     b.Property<DateTime?>("PaymentDate")

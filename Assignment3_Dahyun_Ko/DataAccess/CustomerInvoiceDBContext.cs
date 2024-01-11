@@ -1,5 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 
+using Customers.Entities;
+
 namespace Customers.Entities
 {
     public class CustomerInvoiceDBContext : DbContext

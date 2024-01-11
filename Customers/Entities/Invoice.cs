@@ -1,9 +1,12 @@
-﻿namespace Customers.Entities
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace Customers.Entities
 {
     public class Invoice
     {
         public int InvoiceId { get; set; }
 
+        [Required(ErrorMessage = "Please select the Date")]
         public DateTime? InvoiceDate { get; set; }
 
         public DateTime? InvoiceDueDate
@@ -20,6 +23,7 @@
 
         // FK:
         /* A property to navigate from an Invoice to its Payment Terms */
+        [Required(ErrorMessage = "Please select the Terms")]
         public int PaymentTermsId { get; set; }
 
         public PaymentTerms? PaymentTerms { get; set; }
