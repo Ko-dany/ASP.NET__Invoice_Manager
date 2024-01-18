@@ -9,10 +9,10 @@
 
 ## Development Environment
 
-- **Programming Language:** `C#`
+- **Programming Language:** `C#`, `HTML`
 - **IDE:** `Visual Studio 2022` (version 17.7.6)
-- **Framework:** `ASP.NET CORE` (version 4.8.09032), `Bootstrap`
-- **ORM:** `MS SQL Server Management`
+- **Framework:** `ASP.NET Core` (version 4.8.09032), `Bootstrap`
+- **ORM:** `Microsoft SQL Server Management`
 
 ## Main Features
 
@@ -20,14 +20,15 @@
 - DB Connection
 - Data Validation
 - Alphabetical Grouping of the List
+- Soft Deletion
 
-### (추가하면 좋겠는 것)
+<!-- ### (Feature for future)
 
 - Cookie & Session
 - Authentication
-- Authorization
+- Authorization -->
 
-## How to start
+<!-- ## How to start -->
 
 <!-- Add instructions on how to get the project up and running -->
 

@@ -1,0 +1,12 @@
+{
+  "dependencies": {
+    "mssql2": {
+      "serviceConnectorResourceId": "/subscriptions/[parameters('subscriptionId')]/resourcegroups/[parameters('resourceGroupName')]/providers/Microsoft.Web/sites/Assignment3DahyunKo20240112143512/providers/Microsoft.ServiceLinker/linkers/ConnectionStringsCustomerInvoiceDB_3DD4A5068D",
+      "secretStore": "AzureAppSettings",
+      "resourceId": "/subscriptions/[parameters('subscriptionId')]/resourcegroups/[parameters('resourceGroupName')]/providers/Microsoft.Sql/servers/assignment3-dahyun-kodbserver/databases/Assignment3_Dahyun_Ko_db",
+      "type": "mssql.azure",
+      "connectionId": "ConnectionStrings:CustomerInvoiceDB",
+      "dynamicId": null
+    }
+  }
+}

@@ -2,7 +2,25 @@
     ViewData["Title"] = "Home Page";
 }
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <a asp-controller="Customer" asp-action="Customers">Go to the customer.</a>
+<div>
+    <h1 class="display-4 text-center mb-5">Invoice Manager 📑</h1>
+    <p class="mb-5">
+        <a class="fs-5 link-info link-offset-2 link-underline-opacity-25 link-underline-opacity-100-hover" asp-controller="Customer" asp-action="Customers">Go to the customer page.</a>
+    </p>
+    <div class="mb-5">
+        <h5 class="fs-3 display-4"><strong>Project History</strong></h5>
+        <ul class="fs-6 display-4 list-group list-group-flush">
+            <li class="list-group-item"><strong>Creator: </strong>Dahyun Ko</li>
+            <li class="list-group-item"><strong>Development Period: </strong>Dec/2/2023 - Dec/13/2023</li>
+        </ul>
+    </div>
+    <div class="mb-5">
+        <h5 class="fs-3 display-4"><strong>Development Environment</strong></h5>
+        <ul class="fs-6 display-4 list-group list-group-flush">
+            <li class="list-group-item"><strong>Programming Lanugae: </strong>C#, HTML</li>
+            <li class="list-group-item"><strong>IDE: </strong>Visual Studio 2022</li>
+            <li class="list-group-item"><strong>Framework: </strong>ASP.NET Core, BootStrap</li>
+            <li class="list-group-item"><strong>ORM: </strong>Microsoft SQL Server Management</li>
+        </ul>
+    </div>
 </div>
