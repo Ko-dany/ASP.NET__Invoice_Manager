@@ -46,9 +46,9 @@
 
 ## Preview
 
-<img src="preview/Home_page.png" width="auto" height="auto">
-<img src="preview/Customer_page.png" width="auto" height="auto">
-<img src="preview/Invoice_page.png" width="auto" height="auto">
-<img src="preview/Add_customer_page_validation.png" width="auto" height="auto">
-<img src="preview/Edit_customer_page.png" width="auto" height="auto">
-<img src="preview/Soft_deletion.png" width="auto" height="auto">
+<img src="preview/Home_page.png" style="border:1px black solid">
+<img src="preview/Customer_page.png" style="border:1px black solid">
+<img src="preview/Invoice_page.png" style="border:1px black solid">
+<img src="preview/Add_customer_page_validation.png" style="border:1px black solid">
+<img src="preview/Edit_customer_page.png" style="border:1px black solid">
+<img src="preview/Soft_deletion.png" style="border:1px black solid">
